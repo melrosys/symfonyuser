@@ -1,0 +1,80 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello AdminController!{% endblock %}
+
+{% block content %}
+<div class="row">
+          <div class="col-md-12">
+            <div class="card">
+              <div class="card-header">
+                <h4 class="card-title">Liste des utilisateurs</h4>
+                <p><a href="/admin">Retour</a> / <a href="/register"><i class="nc-icon nc-simple-add"></i> Ajouter un utilisateur</a></p>
+              </div>
+              <div class="card-body">
+                <div class="icons-wrapper">
+                  <table class="table">
+                    <thead class=" text-primary">
+                      <th>
+                        Login
+                      </th>
+                      <th>
+                        Nom & prénom
+                      </th>
+                      <th>
+                        Roles
+                      </th>
+                      <th class="text-right">
+                        Status
+                      </th>
+                      <th class="text-right">
+                        Nb con
+                      </th>
+                      <th class="text-right">
+                        Options
+                      </th>
+                    </thead>
+                    <tbody>
+                    {% set role = '' %}
+                    {% for user in users %}
+                      <tr>
+                        <td>
+                          <i class="nc-icon nc-single-02"></i> {{ user.email }}
+                        </td>
+                        <td>
+                          {{ user.name }}
+                        </td>
+                        <td>
+                          {% for roles in user.roles %}
+                            {% if roles == 'ROLE_USER' %}
+                                Utilisateur
+                            {% elseif roles == 'ROLE_ADMIN' %}
+                                Administrateur
+                            {% endif %}
+                          {% endfor %}
+                        </td>
+                        <td class="text-right">
+                          {% if user.status != 1 %}
+                          Activé
+                          {% else %}
+                          <font color=red>Désactivé</font>
+                          {% endif %}
+                        </td>
+                        <td class="text-right">
+                          {{ user.nbconnect }}
+                        </td>
+                        <td class="text-right">
+                          <a href="/admin/users/{{ user.id }}"><i class="nc-icon nc-settings-gear-65"></i></a>
+                        </td>
+                      </tr>
+                      {% endfor %}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+<script>
+var activepage = "#slidelink5";
+</script>
+{% endblock %}

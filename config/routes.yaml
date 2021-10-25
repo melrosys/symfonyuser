@@ -1,0 +1,26 @@
+index:
+    path: /
+    controller: App\Controller\HomeController::index
+admin_user_list:
+    path: /admin/users
+    controller: App\Controller\AdminController::list_users
+admin_user_list_byid:
+    path: /admin/users/{id}
+    requirements: 
+        id: '\d+'
+    controller: App\Controller\AdminController::list_users_id
+admin_user_update:
+    path: /admin/users/update/{id}
+    methods: POST
+    requirements: 
+        id: '\d+'
+    controller: App\Controller\AdminController::list_users_update
+admin_device_list:
+    path: /admin/device
+    controller: App\Controller\AdminController::list_device
+admin_tech_list:
+    path: /admin/tech
+    controller: App\Controller\AdminController::list_tech
+admin_storage_list:
+    path: /admin/storage
+    controller: App\Controller\AdminController::list_storage

@@ -1,0 +1,63 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Connexion{% endblock %}
+
+{% block content %}
+<div class="content">
+    <div class="row" align="center">
+        <div class="col-md-3">
+            <div class="card card-user">
+                <div class="card-header">
+                    <h5 class="card-title">Connexion</h5>
+                </div>
+                <div class="card-body">
+                    <form method="post" class="row">
+                        {% if error %}
+                            <div class="col s12 m6 l6 offset-m3 offset-l3">
+                                <span class="error">{{ error.messageKey|trans(error.messageData, 'security') }}</span>
+                            </div>
+                        {% endif %}
+
+                        {% if app.user %}
+                            <div class="col s12 m6 l6 offset-m3 offset-l3">
+                                Tu es actuellement connect&#xE9; en tant que {{ app.user.username }}, <a href="{{ path('app_logout') }}">D&#xE9;connecte-toi</a>
+                            </div>
+                        {% endif %}
+                        <div class="row" style="margin:10px">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" required autofocus placeholder="Adresse email">
+                                    </div>
+                                </div>
+
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <input type="password" name="password" id="inputPassword" class="form-control" required placeholder="Mot de passe">
+                                    </div>
+                                </div>
+
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <input type="submit" class="btn btn-primary" value="Me connecter">
+                                        <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+                                    </div>
+                                </div>
+                        </div>
+
+                        {#
+                            Uncomment this section and add a remember_me option below your firewall to activate remember me functionality.
+                            See https://symfony.com/doc/current/security/remember_me.html
+
+                            <div class="checkbox mb-3">
+                                <label>
+                                    <input type="checkbox" name="_remember_me"> Remember me
+                                </label>
+                            </div>
+                        #}
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
