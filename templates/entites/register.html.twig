@@ -1,0 +1,63 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Register{% endblock %}
+
+{% block content %}
+        <div class="row">
+          <div class="col-md-4">
+            <div class="card">
+              <div class="card-header">
+                <h4 class="card-title">Ajouter une entités</h4>
+                <p><a href="/admin/entites/list">Retour</a></p>
+              </div>
+              <div class="card-body">
+                <div  id="icons-wrapper">
+                    {{ form_start(registrationForm) }}
+                    <div class="col-md-12">
+                        <div class="form-group">
+                        <label>Nom de l'entites</label>
+                        {{ form_widget(registrationForm.name, {'attr': {'class': 'form-control'}}) }}
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <label>Adresse</label>
+                        <div class="form-group">
+                        {{ form_widget(registrationForm.adresse, {'attr': {'class': 'form-control'}}) }}
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <label>Ville</label>
+                        <div class="form-group">
+                        {{ form_widget(registrationForm.ville, {'attr': {'class': 'form-control'}}) }}
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <label>Code postal</label>
+                        <div class="form-group">
+                        {{ form_widget(registrationForm.codep, {'attr': {'class': 'form-control'}}) }}
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <button type="submit" class="btn">Register</button>
+                        </div>
+                    </div>
+                    {{ form_end(registrationForm) }}
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-8">
+            <div class="card">
+              <div class="card-body">
+                <div  id="icons-wrapper">
+                    Liste des utilisateurs
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+<script>
+var activepage = "#slidelink5";
+</script>
+{% endblock %}

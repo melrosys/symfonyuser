@@ -1,0 +1,143 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello AdminController!{% endblock %}
+
+{% block content %}
+        <div class="row">
+          <div class="col-md-3">
+            <div class="card">
+              <div class="card-body">
+                <div class="author">
+                  <p class="description">
+                    {{ entite.name }}
+                  </p>
+                    {{ entite.ville }}<br>
+                    {{ entite.codep }}<br>
+                    {{ entite.telentite }}<br>
+                </div>
+                <p class="description text-center">
+
+                </p>
+              </div>
+              <div class="card-footer">
+                <hr>
+                <div class="button-container">
+                  <div class="row">
+                    <div class="col-lg-12 col-md-6 col-6 ml-auto mr-auto">
+                      <h5><small>Nombre connexion</small></h5>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-9">
+            <div class="card">
+              <div class="card-header">
+                <h4 class="card-title">Paramètres utilisateur</h4>
+                <p><a href="/admin/entites/list">Retour</a></p>
+              </div>
+              <div class="card-body">
+                <div  id="icons-wrapper">
+                    <div class="row">
+                        <div class="col-md-4">
+                            {{ form_start(formobject, {'action': path('entites_entite_id', { 'id': entite.id })}) }}
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label>Nom</label>
+                                    {{ form_widget(formobject.name, {'attr': {'class': 'form-control'}, 'required': true}) }}
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label>Adresse</label>
+                                    {{ form_widget(formobject.adresse, {'attr': {'class': 'form-control'}}) }}
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label>Ville</label>
+                                    {{ form_widget(formobject.ville, {'attr': {'class': 'form-control'}}) }}
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label>Code postal</label>
+                                    {{ form_widget(formobject.codep, {'attr': {'class': 'form-control'}}) }}
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label>Telephone</label>
+                                    {{ form_widget(formobject.tel_entite, {'attr': {'class': 'form-control'}}) }}
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <button class="btn btn-primary">Valider</button>
+                                </div>
+                            </div>
+                            {{ form_end(formobject) }}
+                        </div>
+                        <div class="col-md-4" align=center>
+                            {{ form_start(form_img, {'action': path('upload_entite_image', { 'id': entite.id })}) }}
+                            <div class="col-md-12" align=center>
+                                <div class="form-group">
+                                    <h6>Avatar</h6>
+                                    {% if entite.picture %}
+                                    <label style="padding:10px;font-size:60p"><img src="{{ asset('upload/logoentites/') }}{{ entite.picture }}"></label>
+                                    {% else %}
+                                    <label style="padding:10px;font-size:60px"><i class="nc-icon nc-image"></i></label>
+                                    {% endif %}
+                                    {{ form_widget(form_img.picture) }}
+                                </div>
+                            </div>
+                            <div class="col-md-12" align=center>
+                                <div class="form-group">
+                                    <button class="btn btn-primary">Uploader</button>
+                                </div>
+                            </div>
+                            {{ form_end(form_img) }}
+                            <h6>Supprimer le compte</h6>
+                            {{ form_start(form_supp, {'action': path('admin_entite_supp', { 'id': entite.id })}) }}
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label style="color:#ff0000">Tapez (<b>supp</b>) puis Entrer</label>
+                                    {{ form_widget(form_supp.confirme, {'attr': {'class': 'form-control'}, 'required': true}) }}
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <button class="btn btn-primary">Supprimer</button>
+                                </div>
+                            </div>
+                            {{ form_end(form_supp) }}
+                        </div>
+                        <div class="col-md-4" align=center>
+                            <h6>Responsable du stock</h6>
+                            <table class="table"
+                            {% for resp in respstock %}
+                            <tr>
+                                <td>
+                                <i class="nc-icon nc-bank"></i> 
+                                {% if resp.name is defined %}
+                                {{ resp.name }}
+                                {% endif %}
+                                </td>
+                                <td class="text-right">
+                                <a href="/admin/entites/entite/{{ resp.id }}"><i class="nc-icon nc-settings-gear-65"></i></a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                            </table>
+                        </div>
+                    </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+<script>
+var activepage = "#slidelink10";
+</script>
+{% endblock %}

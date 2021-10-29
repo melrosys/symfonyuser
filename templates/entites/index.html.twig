@@ -1,0 +1,59 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello EntitesController!{% endblock %}
+
+{% block content %}
+<div class="row">
+          <div class="col-md-12">
+            <div class="card">
+              <div class="card-header">
+                <div class="col-md-4" style="float:right">
+                  <form>
+                    <div class="input-group no-border">
+                      <input type="text" value="" class="form-control" placeholder="Search..." id="searchsug">
+                      <div class="input-group-append">
+                        <div class="input-group-text">
+                          <i class="nc-icon nc-zoom-split"></i>
+                        </div>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+                <h4 class="card-title">Liste des entités</h4>
+                <p><a href="/admin">Retour</a> / <a href="/entites/register"><i class="nc-icon nc-simple-add"></i> Ajouter une entités</a></p>
+              </div>
+              <div class="card-body">
+                <div class="icons-wrapper">
+                  <table class="table">
+                    <thead class=" text-primary">
+                      <th>
+                        Login
+                      </th>
+                      <th class="text-right">
+                        Options
+                      </th>
+                    </thead>
+                    <tbody>
+                    {% set role = '' %}
+                    {% for entite in entites %}
+                      <tr>
+                        <td>
+                          <i class="nc-icon nc-bank"></i> 
+                          {{ entite.name }}
+                        </td>
+                        <td class="text-right">
+                          <a href="/admin/entites/entite/{{ entite.id }}"><i class="nc-icon nc-settings-gear-65"></i></a>
+                        </td>
+                      </tr>
+                      {% endfor %}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+<script>
+var activepage = "#slidelink10";
+</script>
+{% endblock %}
