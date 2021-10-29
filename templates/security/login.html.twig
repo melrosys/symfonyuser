@@ -9,6 +9,7 @@
             <div class="card card-user">
                 <div class="card-header">
                     <h5 class="card-title">Connexion</h5>
+                    <i class="nc-icon nc-lock-circle-open" style="font-size:40px"></i>
                 </div>
                 <div class="card-body">
                     <form method="post" class="row">
@@ -40,6 +41,11 @@
                                     <div class="form-group">
                                         <input type="submit" class="btn btn-primary" value="Me connecter">
                                         <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <a href="/reset-password">Mot de passe oublié</a>
                                     </div>
                                 </div>
                         </div>

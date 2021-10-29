@@ -8,6 +8,7 @@ use App\Form\ChangePasswordUserType;
 use App\Form\ChangeUserType;
 use App\Form\SuppUsertType;
 use App\Form\UploadImageUserType;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -26,21 +27,32 @@ class AdminController extends AbstractController
     public function index(): Response
     {
         return $this->render('admin/index.html.twig', [
-            'controller_name' => 'AdminController',
+            'controller_name' => 'AdminController'
         ]);
     }
 
     /**
      * @Route("/admin/users", name="admin_user_list")
-     * @IsGranted("ROLE_USER")
+     * @Security("is_granted('ROLE_ADMIN') or is_granted('ROLE_USER')")
      */
     public function list_users(): Response
     {
         $users = $this->getDoctrine()->getRepository(User::class)->findAll();
+       //$this->gen_f_ile_json_user($users);
+        //exit();
         return $this->render('admin/users.html.twig', [
             'controller_name' => 'AdminController',
-            'users'=> $users
+            'users'=> $users,
+            'autocomp_user'=> "user.js"
         ]);
+    }
+
+    public function gen_f_ile_json_user($user): void
+    {
+        foreach($user as $key => $value)
+        {
+            var_dump($value);echo "<hr>";
+        }
     }
 
     /**
@@ -67,7 +79,7 @@ class AdminController extends AbstractController
 
     /**
      * @Route("/admin/users/password/{id}", name="admin_user_update_password")
-     * @IsGranted("ROLE_USER")
+     * @IsGranted("ROLE_ADMIN")
      */
     public function admin_user_update_password(Request $request, UserPasswordEncoderInterface $userPasswordEncoderInterface, int $id): Response
     {
@@ -93,7 +105,7 @@ class AdminController extends AbstractController
 
     /**
      * @Route("/admin/users/delete/{id}", name="admin_user_supp")
-     * @IsGranted("ROLE_USER")
+     * @IsGranted("ROLE_ADMIN")
      */
     public function admin_user_supp(Request $request, int $id): Response
     {
@@ -107,6 +119,7 @@ class AdminController extends AbstractController
                 $em = $this->getDoctrine()->getManager();
                 $em->remove($users);
                 $em->flush();
+
                 $this->addFlash('success', 'Modification effectué.');
                 return $this->redirect($this->generateUrl('admin_user_list'));
             }
@@ -123,7 +136,7 @@ class AdminController extends AbstractController
 
     /**
      * @Route("/admin/users/update/{id}", name="admin_user_update")
-     * @IsGranted("ROLE_USER")
+     * @IsGranted("ROLE_ADMIN")
      * @param User $user
      */
     public function list_users_update(Request $request, $id): Response
@@ -142,8 +155,9 @@ class AdminController extends AbstractController
 
             $status = $request->request->get('status');
             $user->setStatus($status);
-
             $em->flush();
+
+            
             $this->addFlash('success', 'Modification effectué');
             return $this->redirectToRoute('admin_user_list_byid', ['id' => $id]);
         }
@@ -153,7 +167,7 @@ class AdminController extends AbstractController
 
     /**
      * @Route("/admin/users/uploadimg/{id}", name="upload_users_image")
-     * @IsGranted("ROLE_USER")
+     * @IsGranted("ROLE_ADMIN")
      * @param User $user
      * @var UploadedFile $imageFile
      */

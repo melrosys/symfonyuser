@@ -80,6 +80,11 @@ class User implements UserInterface
      */
     private $status;
 
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $entity_id;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -248,6 +253,18 @@ class User implements UserInterface
     public function setStatus(?int $status): self
     {
         $this->status = $status;
+
+        return $this;
+    }
+
+    public function getEntityId(): ?int
+    {
+        return $this->entity_id;
+    }
+
+    public function setEntityId(?int $entity_id): self
+    {
+        $this->entity_id = $entity_id;
 
         return $this;
     }

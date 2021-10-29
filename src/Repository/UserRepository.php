@@ -36,6 +36,16 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         $this->_em->flush();
     }
 
+    /**
+     * 
+     */
+    public function findAllOrdered() : array
+    {
+        $dql = 'SELECT cat.name, cat.email, cat.username, cat.id FROM App\Entity\User cat ORDER BY cat.name DESC';
+        $query = $this->getEntityManager()->createQuery($dql);
+        return $query->execute();
+    }
+
     // /**
     //  * @return User[] Returns an array of User objects
     //  */
@@ -51,7 +61,7 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
             ->getResult()
         ;
     }
-    */
+    
 
     /*
     public function findOneBySomeField($value): ?User
