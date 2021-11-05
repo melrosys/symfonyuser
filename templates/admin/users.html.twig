@@ -48,6 +48,7 @@
                     <tbody>
                     {% set role = '' %}
                     {% for user in users %}
+                    {% if app.user.email != user.email %}
                       <tr>
                         <td>
                           <i class="nc-icon nc-single-02"></i> {{ user.email }}
@@ -78,6 +79,7 @@
                           <a href="/admin/users/{{ user.id }}"><i class="nc-icon nc-settings-gear-65"></i></a>
                         </td>
                       </tr>
+                      {% endif %}
                       {% endfor %}
                     </tbody>
                   </table>

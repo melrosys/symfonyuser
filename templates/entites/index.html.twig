@@ -3,7 +3,7 @@
 {% block title %}Hello EntitesController!{% endblock %}
 
 {% block content %}
-<div class="row">
+        <div class="row">
           <div class="col-md-12">
             <div class="card">
               <div class="card-header">
@@ -20,14 +20,20 @@
                   </form>
                 </div>
                 <h4 class="card-title">Liste des entités</h4>
-                <p><a href="/admin">Retour</a> / <a href="/entites/register"><i class="nc-icon nc-simple-add"></i> Ajouter une entités</a></p>
+                <p><a href="/admin">Retour</a> / <a href="#" data-toggle="modal" data-target="#myAddentites" data-cache="false"><i class="nc-icon nc-simple-add"></i> Ajouter une entités</a></p>
               </div>
               <div class="card-body">
                 <div class="icons-wrapper">
                   <table class="table">
                     <thead class=" text-primary">
                       <th>
-                        Login
+                        Entité
+                      </th>
+                      <th class="text-primary">
+                        Ville
+                      </th>
+                      <th class="text-primary">
+                        Code postal
                       </th>
                       <th class="text-right">
                         Options
@@ -41,6 +47,12 @@
                           <i class="nc-icon nc-bank"></i> 
                           {{ entite.name }}
                         </td>
+                        <td>
+                          {{ entite.ville }}
+                        </td>
+                        <td>
+                          {{ entite.codep }}
+                        </td>
                         <td class="text-right">
                           <a href="/admin/entites/entite/{{ entite.id }}"><i class="nc-icon nc-settings-gear-65"></i></a>
                         </td>
@@ -53,6 +65,50 @@
             </div>
           </div>
         </div>
+        <div class="modal modal-primary fade" id="myAddentites" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="card-header">
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">X</button>
+                      Ajouter une entités
+                  </div>
+                  <br>
+                  {{ form_start(registrationForm, {'action': path('entites_register')}) }}
+                  <div class="col-md-12">
+                      <div class="form-group">
+                      <label>Nom de l'entites</label>
+                      {{ form_widget(registrationForm.name, {'attr': {'class': 'form-control'}}) }}
+                      </div>
+                  </div>
+                  <div class="col-md-12">
+                      <label>Adresse</label>
+                      <div class="form-group">
+                      {{ form_widget(registrationForm.adresse, {'attr': {'class': 'form-control'}}) }}
+                      </div>
+                  </div>
+                  <div class="col-md-12">
+                      <label>Ville</label>
+                      <div class="form-group">
+                      {{ form_widget(registrationForm.ville, {'attr': {'class': 'form-control'}}) }}
+                      </div>
+                  </div>
+                  <div class="col-md-12">
+                      <label>Code postal</label>
+                      <div class="form-group">
+                      {{ form_widget(registrationForm.codep, {'attr': {'class': 'form-control'}}) }}
+                      </div>
+                  </div>
+                  <div class="col-md-12">
+                      <div class="form-group">
+                          <button type="submit" class="btn">Register</button>
+                      </div>
+                  </div>
+                  {{ form_end(registrationForm) }}
+                </div>
+                <!-- /.modal-content -->
+            </div>
+            <!-- /.modal-dialog -->
+        </div>      
 <script>
 var activepage = "#slidelink10";
 </script>

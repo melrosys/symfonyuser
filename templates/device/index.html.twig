@@ -1,0 +1,105 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello DeviceController!{% endblock %}
+
+{% block content %}
+        <div class="row">
+          <div class="col-md-12">
+            <div class="card">
+              <div class="card-header">
+                <div class="col-md-4" style="float:right">
+                  <form>
+                    <div class="input-group no-border">
+                      <input type="text" value="" class="form-control" placeholder="Search..." id="searchsug">
+                      <div class="input-group-append">
+                        <div class="input-group-text">
+                          <i class="nc-icon nc-zoom-split"></i>
+                        </div>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+                <h4 class="card-title">Gestion du matériel</h4>
+                <p><a href="/admin">Retour</a> / <a href="#" data-toggle="modal" data-target="#myAdddevice" data-cache="false"><i class="nc-icon nc-simple-add"></i> Nouvelle famille de matériel</a></p>
+              </div>
+              <div class="card-body">
+                <div class="icons-wrapper">
+                  <table class="table">
+                    <thead class=" text-primary">
+                      <th>
+                        Titre
+                      </th>
+                      <th>
+                        Description
+                      </th>
+                      <th>
+                        Tags
+                      </th>
+                    </thead>
+                    <tbody>
+                    {% for materiel in materiels %}
+                      <tr>
+                        <td>
+                          <i class="nc-icon nc-laptop"></i> 
+                          {{ materiel.title }}
+                        </td>
+                        <td>
+                          {{ materiel.descrip }}
+                        </td>
+                        <td>
+                          {{ materiel.tags }}
+                        </td>
+                        <td class="text-right">
+                          <a href="/admin/device/list/{{ materiel.id }}"><i class="nc-icon nc-zoom-split"></i></a>
+                        </td>
+                      </tr>
+                      {% endfor %}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal modal-primary fade" id="myAdddevice" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="card-header">
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">X</button>
+                      Nouvelle famille de matériel
+                  </div>
+                  <br>
+                  {{ form_start(registrationForm, {'action': path('device_register')}) }}
+                  <div class="col-md-12">
+                      <div class="form-group">
+                      <label>Titre</label>
+                      {{ form_widget(registrationForm.title, {'attr': {'class': 'form-control'}}) }}
+                      </div>
+                  </div>
+                  <div class="col-md-12">
+                      <label>Description</label>
+                      <div class="form-group">
+                      {{ form_widget(registrationForm.descrip, {'attr': {'class': 'form-control'}}) }}
+                      </div>
+                  </div>
+                  <div class="col-md-12">
+                      <label>Tags</label>
+                      <div class="form-group">
+                      {{ form_widget(registrationForm.tags, {'attr': {'class': 'form-control'}}) }}
+                      </div>
+                  </div>
+                  <div class="col-md-12">
+                      <div class="form-group">
+                          <button type="submit" class="btn">Register</button>
+                      </div>
+                  </div>
+                  {{ form_end(registrationForm) }}
+                </div>
+                <!-- /.modal-content -->
+            </div>
+            <!-- /.modal-dialog -->
+        </div>      
+<script>
+var activepage = "#slidelink2";
+</script>
+{% endblock %}

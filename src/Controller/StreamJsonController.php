@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Entity\Entites;
+use App\Entity\Materiel;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController; 
@@ -32,6 +33,10 @@ class StreamJsonController extends AbstractController
         elseif($file == "entites.js")
         {
             $donnee = $this->getDoctrine()->getRepository(Entites::class)->findAllOrdered();
+            $data =  $this->get('serializer')->serialize($donnee, 'json');
+        } 
+        elseif ($file == "device.js") {
+            $donnee = $this->getDoctrine()->getRepository(Materiel::class)->findAll();
             $data =  $this->get('serializer')->serialize($donnee, 'json');
         }
         $response = new Response($data);

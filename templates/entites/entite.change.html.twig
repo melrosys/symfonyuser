@@ -8,23 +8,31 @@
             <div class="card">
               <div class="card-body">
                 <div class="author">
+                <p  align=center>
+                    <i class="nc-icon nc-bank" style="font-size:40px"></i>
+                </p>
+                <hr>
+                <label>Entités</label>
                   <p class="description">
                     {{ entite.name }}
                   </p>
+                    <label>Adresse</label><br>
+                    {{ entite.adresse }}<br>
+                    <label>Ville</label><br>
                     {{ entite.ville }}<br>
+                    <label>Code postal</label><br>
                     {{ entite.codep }}<br>
-                    {{ entite.telentite }}<br>
+                    <label>Télephone</label><br>
+                    {{ entite.telentite }}
                 </div>
-                <p class="description text-center">
-
-                </p>
               </div>
               <div class="card-footer">
                 <hr>
                 <div class="button-container">
-                  <div class="row">
+                  <div class="row text-center">
                     <div class="col-lg-12 col-md-6 col-6 ml-auto mr-auto">
-                      <h5><small>Nombre connexion</small></h5>
+                      <a href="#" data-toggle="modal" data-target="#myChangeprofile" data-cache="false"><i class="fa fa-user"></i> Modifier</a>
+                       | <a href="javascript:change_even('')">Test modal</a>
                     </div>
                   </div>
                 </div>
@@ -34,52 +42,108 @@
           <div class="col-md-9">
             <div class="card">
               <div class="card-header">
-                <h4 class="card-title">Paramètres utilisateur</h4>
+                <h4 class="card-title">Personne(s) autorisée(s)</h4>
                 <p><a href="/admin/entites/list">Retour</a></p>
               </div>
               <div class="card-body">
                 <div  id="icons-wrapper">
                     <div class="row">
-                        <div class="col-md-4">
-                            {{ form_start(formobject, {'action': path('entites_entite_id', { 'id': entite.id })}) }}
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <label>Nom</label>
-                                    {{ form_widget(formobject.name, {'attr': {'class': 'form-control'}, 'required': true}) }}
-                                </div>
-                            </div>
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <label>Adresse</label>
-                                    {{ form_widget(formobject.adresse, {'attr': {'class': 'form-control'}}) }}
-                                </div>
-                            </div>
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <label>Ville</label>
-                                    {{ form_widget(formobject.ville, {'attr': {'class': 'form-control'}}) }}
-                                </div>
-                            </div>
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <label>Code postal</label>
-                                    {{ form_widget(formobject.codep, {'attr': {'class': 'form-control'}}) }}
-                                </div>
-                            </div>
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <label>Telephone</label>
-                                    {{ form_widget(formobject.tel_entite, {'attr': {'class': 'form-control'}}) }}
-                                </div>
-                            </div>
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <button class="btn btn-primary">Valider</button>
-                                </div>
-                            </div>
-                            {{ form_end(formobject) }}
+                        <div class="col-md-12" align=center>
+                        {% if respstock is defined %}
+                            {% if respstock|length != 0 %}
+                                <table class="table"
+                                {% for resp in respstock %}
+                                <tr>
+                                    <td>
+                                    <i class="nc-icon nc-single-02"></i> 
+                                    {% if resp.user.name is defined %}
+                                    {{ resp.user.name }}
+                                    {% endif %}
+                                    </td>
+                                    <td>
+                                    {% if resp.user.email is defined %}
+                                    {{ resp.user.email }}
+                                    {% endif %}
+                                    </td>
+                                    <td>
+                                    {% if resp.user.username is defined %}
+                                    {{ resp.user.username }}
+                                    {% endif %}
+                                    </td>
+                                    <td class="text-right">
+                                    <a href="/admin/entites/entite/{{ resp.user.id }}"><i class="nc-icon nc-zoom-split"></i></a>
+                                    <a href="/admin/entites/entite/{{ resp.user.id }}"><i class="nc-icon nc-settings-gear-65"></i></a>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                                </table>
+                                <hr>
+                                <a href="#" data-toggle="modal" data-target="#myAddresponsable" data-cache="false">Nouvel utilisateur</a>
+                            {% else %}
+                                <i class="fa fa-plus" style="font-size:50px;color:#ddd"></i><br>
+                                <font style="font-size:20px">Ajoutez un utilisateur</font><br>
+                                <a href="#" data-toggle="modal" data-target="#myAddresponsable" data-cache="false">Nouvel utilisateur</a>
+                            {% endif %}
+                        {% else %}
+                            <i class="fa fa-plus" style="font-size:50px;color:#ddd"></i><br>
+                            <font style="font-size:20px">Ajoutez un utilisateur</font><br>
+                            <a href="#" data-toggle="modal" data-target="#myAddresponsable" data-cache="false">Nouvel utilisateur</a>
+                        {% endif %}
                         </div>
-                        <div class="col-md-4" align=center>
+                    </div>
+                </div>
+              </div>
+            </div>
+            <div class="card">
+              <div class="card-header">
+                <h4 class="card-title">Salle de stockage</h4>
+              </div>
+              <div class="card-body">
+                <div  id="icons-wrapper">
+                    <div class="row">
+                        <div class="col-md-12" align=center>
+                        {% if listsalle is defined %}
+                            {% if listsalle|length != 0 %}
+                                <table class="table"
+                                {% for salle in listsalle %}
+                                <tr>
+                                    <td>
+                                    <i class="nc-icon nc-bank"></i> 
+                                    {% if salle.name is defined %}
+                                    {{ salle.name }}
+                                    {% endif %}
+                                    </td>
+                                    <td>
+                                    {% if salle.position is defined %}
+                                    {{ salle.position }}
+                                    {% endif %}
+                                    </td>
+                                    <td class="text-right">
+                                    <a href="/admin/entites/entite/{{ salle.id }}"><i class="nc-icon nc-settings-gear-65"></i></a>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                                </table>
+                                <hr>
+                                <a href="#" data-toggle="modal" data-target="#myAddsalle" data-cache="false">Nouvelle salle</a>
+                            {% else %}
+                                <i class="fa fa-plus" style="font-size:50px;color:#ddd"></i><br>
+                                <font style="font-size:20px">Créer une salle de stockage</font><br>
+                                <a href="#" data-toggle="modal" data-target="#myAddsalle" data-cache="false">Nouvelle salle</a>
+                            {% endif %}
+                        {% else %}
+                            <i class="fa fa-plus" style="font-size:50px;color:#ddd"></i><br>
+                            <font style="font-size:20px">Créer une salle de stockage</font><br>
+                            <a href="#" data-toggle="modal" data-target="#myAddsalle" data-cache="false">Nouvelle salle</a>
+                        {% endif %}
+                        </div>
+                    </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div style="display:none;">
                             {{ form_start(form_img, {'action': path('upload_entite_image', { 'id': entite.id })}) }}
                             <div class="col-md-12" align=center>
                                 <div class="form-group">
@@ -112,32 +176,67 @@
                                 </div>
                             </div>
                             {{ form_end(form_supp) }}
-                        </div>
-                        <div class="col-md-4" align=center>
-                            <h6>Responsable du stock</h6>
-                            <table class="table"
-                            {% for resp in respstock %}
-                            <tr>
-                                <td>
-                                <i class="nc-icon nc-bank"></i> 
-                                {% if resp.name is defined %}
-                                {{ resp.name }}
-                                {% endif %}
-                                </td>
-                                <td class="text-right">
-                                <a href="/admin/entites/entite/{{ resp.id }}"><i class="nc-icon nc-settings-gear-65"></i></a>
-                                </td>
-                            </tr>
-                            {% endfor %}
-                            </table>
-                        </div>
-                    </div>
-                </div>
-              </div>
-            </div>
-          </div>
         </div>
+						<div class="modal modal-primary fade" id="myModalchangesn" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+							<div class="modal-dialog">
+								<div class="modal-content">
+										<div class="modal-header" style="background-color:#65406a;color:#fff">
+										<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+										  <span aria-hidden="true">&times;</span></button>
+										<h4 class="modal-title">Changer un événnement #{:id_sn}</h4>
+										</div>
+										<div class="modal-body">
+										<p>
+											<div class="row">
+												<div class="col-md-12" id="view_change_sn">
+													<div class="preloader-single mg-tb-30">
+														<div class="ts_preloading_box">
+															<div id="ts-preloader-absolute21">
+																<div class="tsperloader21" id="first_tsperloader21"></div>
+																<div class="tsperloader21" id="second_tsperloader21"></div>
+																<div class="tsperloader21" id="third_tsperloader21"></div>
+																<div class="tsperloader21" id="forth_tsperloader21"></div>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+										</p>
+										</div>
+										<div class="modal-footer">
+										
+										</div>
+									</form>
+								</div>
+								<!-- /.modal-content -->
+							</div>
+							<!-- /.modal-dialog -->
+						</div>
+         {% include 'entites/domodal.entite.change.html.twig' %}
 <script>
 var activepage = "#slidelink10";
+function change_even(url)
+{
+    $('#myModalchangesn').modal('show');
+	$.ajax({
+	   url : url,
+	   method: 'GET',
+	   dataType: 'html',
+	   success: function(code_html, statut){
+			$("#view_change_sn").html(code_html);
+			$('#myModalchangesn').modal('show');
+	   },
+
+	   error: function(resultat, statut, erreur){
+			
+	   },
+	   
+	   complete: function(resultat, statut){
+		  
+	   }
+
+	});
+}
+		
 </script>
 {% endblock %}

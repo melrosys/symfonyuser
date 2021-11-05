@@ -7,7 +7,6 @@ use App\Repository\SalleStorageRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ApiResource()
  * @ORM\Entity(repositoryClass=SalleStorageRepository::class)
  */
 class SalleStorage
@@ -25,7 +24,7 @@ class SalleStorage
     private $site_id;
 
     /**
-     * @ORM\Column(type="string", length=150, unique=true)
+     * @ORM\Column(type="string", length=150)
      */
     private $name;
 

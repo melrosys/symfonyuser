@@ -7,8 +7,11 @@ use App\Form\UploadImageUserType;
 use App\Form\CreateEntitesType;
 use App\Form\SuppUsertType;
 use App\Form\EntiteChangeType;
+use App\Form\SalleStorageType;
+use App\Form\AddRespType;
 use App\Entity\Entites;
 use App\Entity\RespStock;
+use App\Entity\SalleStorage;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -25,11 +28,14 @@ class EntitesController extends AbstractController
      */
     public function index(): Response
     {
+        $entite = new Entites();
+        $form = $this->createForm(CreateEntitesType::class, $entite);
         $entites = $this->getDoctrine()->getRepository(Entites::class)->findAll();
         return $this->render('entites/index.html.twig', [
             'controller_name' => 'EntitesController',
             'autocomp_user' => "entites.js",
-            'entites'=> $entites
+            'entites'=> $entites,
+            'registrationForm' => $form->createView(),
         ]);
     }
 
@@ -44,20 +50,76 @@ class EntitesController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            // encode the plain password
+
             $entites->setName($form->get('name')->getData());
 
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($entites);
             $entityManager->flush();
-            // do anything else you need here, like send an email
+            $lastinsert = $entites->getId();
+
             $this->addFlash('success', 'Modification effectué.');
-            return $this->redirect($this->generateUrl('entites_register'));
+            return $this->redirect($this->generateUrl('entites_entite_id', ['id' => $lastinsert]));
         }
-        return $this->render('entites/register.html.twig', [
-            'controller_name' => 'EntitesController',
-            'registrationForm' => $form->createView(),
-        ]);
+        $this->addFlash('error', 'Une erreur est survenue.');
+        return $this->redirect($this->generateUrl('entites_list'));
+    }
+
+    /**
+     * @Route("/resp/register/{id}", name="resp_register")
+     * @IsGranted("ROLE_USER")
+     */
+    public function register_resp(Request $request, int $id): Response
+    {
+        $resp = new RespStock();
+        $form = $this->createForm(AddRespType::class);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entite = $this->getDoctrine()->getRepository(Entites::class)->find($id);
+            $idresp = $form->get('id_resp')->getData();
+            $uniq = md5($idresp->getId() ."-". $id);
+            $resp->setIdEntites($id);
+            $resp->setIdResp($idresp->getId());
+            $resp->setUser($idresp);
+            $resp->setEntites($entite);
+            $resp->setUniq($uniq);
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($resp);
+            $entityManager->flush();
+            $lastinsert = $resp->getIdEntites();
+
+            $this->addFlash('success', 'Modification effectué.');
+            return $this->redirect($this->generateUrl('entites_entite_id', ['id' => $lastinsert]));
+        }
+        $this->addFlash('error', 'Une erreur est survenue.');
+        return $this->redirect($this->generateUrl('entites_list'));
+    }
+
+    /**
+     * @Route("/salle/register/{id}", name="salle_register")
+     * @IsGranted("ROLE_USER")
+     */
+    public function register_salle(Request $request, int $id): Response
+    {
+        $salles = new SalleStorage();
+        $form = $this->createForm(SalleStorageType::class, $salles);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $salles->setSiteId($id);
+            $salles->setName($form->get('name')->getData());
+            $salles->setPosition($form->get('position')->getData());
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($salles);
+            $entityManager->flush();
+            $lastinsert = $salles->getSiteId();
+
+            $this->addFlash('success', 'Modification effectué.');
+            return $this->redirect($this->generateUrl('entites_entite_id', ['id' => $lastinsert]));
+        }
+        $this->addFlash('error', 'Une erreur est survenue.');
+        return $this->redirect($this->generateUrl('entites_list'));
     }
 
     /**
@@ -70,6 +132,10 @@ class EntitesController extends AbstractController
         $form = $this->createForm(EntiteChangeType::class, $entite);
         $form_img = $this->createForm(UploadImageUserType::class, $entite);
         $form_delete = $this->createForm(SuppUsertType::class);
+        $salles = new SalleStorage();
+        $form_salle = $this->createForm(SalleStorageType::class, $salles);
+        $resp = new RespStock();
+        $form_resp = $this->createForm(AddRespType::class, $resp);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -80,19 +146,26 @@ class EntitesController extends AbstractController
             $entite->setTelEntite($form->get('tel_entite')->getData());
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->flush();
-            // do anything else you need here, like send an email
+
             $this->addFlash('success', 'Modification effectué.');
             return $this->redirect($this->generateUrl('entites_entite_id', ['id' => $id]));
         }
 
-        $respstock = $this->getDoctrine()->getRepository(RespStock::class)->findAllOrdered($id);
-        //var_dump($respstock);exit();
+        $respstock = $this->getDoctrine()->getRepository(RespStock::class)->findBy(array('id_entites' => $id));
+        
+        $listsalle = $this->getDoctrine()->getRepository(SalleStorage::class)->findBy(array('site_id' => $id));
+        //dump($respstock);
+        //exit();
+
         return $this->render('entites/entite.change.html.twig', [
             'formobject' => $form->createView(),
             'form_img' => $form_img->createView(),
             'form_supp' => $form_delete->createView(),
             'entite' => $entite,
-            'respstock' => $respstock
+            'form_salle' => $form_salle->createView(),
+            'respstock' => $respstock,
+            'form_resp'=> $form_resp->createView(),
+            'listsalle'=> $listsalle
         ]);
     }
 
@@ -120,7 +193,7 @@ class EntitesController extends AbstractController
                         $this->getParameter('entite_logo_directory'),
                         $newFilename
                     );
-                    //$resizeImg->resize($this->getParameter('entite_logo_directory') . "/" . $newFilename);
+
                     $em = $this->getDoctrine()->getManager();
                     $entite->setPicture($newFilename);
                     $em->flush();

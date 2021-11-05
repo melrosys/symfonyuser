@@ -1,0 +1,149 @@
+        <div class="modal modal-primary fade" id="myChangeprofile" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="card-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">X</button>
+                        Modifier le profile
+                    </div>
+                    <br>
+                    {{ form_start(formobject, {'action': path('admin_user_update', { 'id': users.id })}) }}
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label>Nom</label>
+                            {{ form_widget(formobject.name, {'attr': {'class': 'form-control'}, 'required': true}) }}
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label>Adresse mail</label>
+                            {{ form_widget(formobject.email, {'attr': {'class': 'form-control'}, 'required': true}) }}
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label>Nom d'utilisateur</label>
+                            {{ form_widget(formobject.username, {'attr': {'class': 'form-control'}, 'required': true}) }}
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form-group">
+                        <label>Roles</label>
+                        <select name="role_user" class="form-control">
+                            {% if role == 'ROLE_ADMIN' %}
+                            <option value="ROLE_ADMIN" selected>Administrateur</option>
+                            <option value="ROLE_USER">Utilisateur</option>
+                            {% else %}
+                            <option value="ROLE_USER" selected>Utilisateur</option>
+                            <option value="ROLE_ADMIN">Administrateur</option>
+                            {% endif %}
+                        </select>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form-group">
+                        <label>Etat du compte</label>
+                        <select name="status" class="form-control">
+                            {% if users.status != 1 %}
+                            <option value="0" selected>Compte activé</option>
+                            <option value="1">Compte désactivé</option>
+                            {% else %}
+                            <option value="1" selected>Compte désactivé</option>
+                            <option value="0">Compte activé</option>
+                            {% endif %}
+                        </select>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <button class="btn btn-primary">Valider</button>
+                        </div>
+                    </div>
+                    {{ form_end(formobject) }}
+                </div>
+                <!---content -->
+            </div>
+            <!-- /.mlog -->
+        </div>
+        <div class="modal modal-primary fade" id="myChangeavatar" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="card-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">X</button>
+                        Changer l'avatar
+                    </div>
+                    <br>
+                    {{ form_start(form_img, {'action': path('upload_users_image', { 'id': users.id })}) }}
+                    <div class="col-md-12" align=center>
+                        <div class="form-group">
+                            <h6>Avatar</h6>
+                            {% if users.picture %}
+                            <label style="padding:10px;font-size:60p"><img src="{{ asset('upload/avatar/') }}{{ users.picture }}" class="rounded-circle" style="height:100px"></label>
+                            {% else %}
+                            <label style="padding:10px;font-size:60px"><i class="nc-icon nc-image"></i></label>
+                            {% endif %}
+                            {{ form_widget(form_img.picture) }}
+                        </div>
+                    </div>
+                    <div class="col-md-12" align=center>
+                        <div class="form-group">
+                            <button class="btn btn-primary">Uploader</button>
+                        </div>
+                    </div>
+                    {{ form_end(form_img) }}
+                </div>
+                <!---content -->
+            </div>
+            <!-- /.mlog -->
+        </div>
+        <div class="modal modal-primary fade" id="myChangemdp" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog" style="width:300px">
+                <div class="modal-content" style="width:300px">
+                    <div class="card-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">X</button>
+                        Modifier le mot de passe
+                    </div>
+                    <br>
+                    {{ form_start(form_password, {'action': path('admin_user_update_password', { 'id': users.id })}) }}
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label>Changer le mot de passe</label>
+                            {{ form_widget(form_password.plainPassword, {'attr': {'class': 'form-control'}, 'required': true}) }}
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <button class="btn btn-primary">Changer</button>
+                        </div>
+                    </div>
+                    {{ form_end(form_password) }}
+                </div>
+                <!---content -->
+            </div>
+            <!-- /.mlog -->
+        </div>
+        <div class="modal modal-primary fade" id="mySupp" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="card-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">X</button>
+                        Supprimer le compte
+                    </div>
+                    <br>
+                    {{ form_start(form_supp, {'action': path('admin_user_supp', { 'id': users.id })}) }}
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label style="color:#ff0000">Tapez (<b>supp</b>) puis Entrer</label>
+                            {{ form_widget(form_supp.confirme, {'attr': {'class': 'form-control'}, 'required': true}) }}
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <button class="btn btn-primary">Supprimer</button>
+                        </div>
+                    </div>
+                    {{ form_end(form_supp) }}
+                </div>
+                <!---content -->
+            </div>
+            <!-- /.mlog -->
+        </div>

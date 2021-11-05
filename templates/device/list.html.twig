@@ -1,0 +1,105 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello DeviceController!{% endblock %}
+
+{% block content %}
+        <div class="row">
+          <div class="col-md-12">
+            <div class="card">
+              <div class="card-header">
+                <div class="col-md-6" style="float:right">
+
+                </div>
+                <h4 class="card-title">{{ materiel.title }}</h4>
+                <nav class="navbar navbar-expand-lg navbar-dark bg-dark" style="height:30px">
+                  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <i class="nc-icon nc-settings-gear-65" style="color:#fff"></i>
+                    <ul class="navbar-nav mr-auto">
+                      <li class="nav-item">
+                        <a class="nav-link" href="/admin/device">Retour</a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link" href="#" data-toggle="modal" data-target="#myAdddevice" data-cache="false"><i class="nc-icon nc-simple-add"></i> Ajouter une catégorie</a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link" href="#" data-toggle="modal" data-target="#myAddmarque" data-cache="false"><i class="nc-icon nc-simple-add"></i> Ajouter une marque</a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link" href="#" data-toggle="modal" data-target="#myAddfournisseur" data-cache="false"><i class="nc-icon nc-simple-add"></i> Ajouter un fournisseur</a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link" href="#" data-toggle="modal" data-target="#myAddproduct" data-cache="false"><i class="nc-icon nc-simple-add"></i> Ajouter un article</a>
+                      </li>
+                    </ul>
+                  </div>
+                </nav>
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-3">
+            <div class="card">
+              <div class="card-header">
+                <h4 class="card-title">Catégorie</h4>
+                <table class="table">
+                    {% for listcatego in listcategos %}
+                      <tr>
+                        <td>
+                          {{ listcatego.name }}
+                        </td>
+                        <td class="text-right">
+                          <a href="/admin/device/list/{{ listcatego.id }}"><i class="nc-icon nc-zoom-split"></i></a>
+                        </td>
+                      </tr>
+                    {% endfor %}
+                </table>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-9">
+            <div class="card">
+              <div class="card-header">
+                <h4 class="card-title">Toutes les catégories</h4>
+                  <table class="table">
+                    <thead class=" text-primary">
+                      <th>
+                        Titre
+                      </th>
+                      <th>
+                        Description
+                      </th>
+                      <th>
+                        Tags
+                      </th>
+                    </thead>
+                    <tbody>
+                    {% for produit in listproduit %}
+                      <tr>
+                        <td>
+                          <i class="nc-icon nc-laptop"></i> 
+                          {{ produit.title }}
+                        </td>
+                        <td>
+                          {{ produit.model }}
+                        </td>
+                        <td>
+                          {{ produit.waranty }}
+                        </td>
+                        <td class="text-right">
+                          <a href="/admin/device/list/{{ produit.id }}"><i class="nc-icon nc-zoom-split"></i></a>
+                        </td>
+                      </tr>
+                      {% endfor %}
+                    </tbody>
+                  </table>
+              </div>
+            </div>
+          </div>
+        </div>
+        {% include 'device/domodal.list.html.twig' %}    
+<script>
+var activepage = "#slidelink2";
+</script>
+{% endblock %}

@@ -21,21 +21,37 @@ class RespStockRepository extends ServiceEntityRepository
     }
 
     /**
-     * 
+     * @return RespStock[]
      */
-    public function findAllOrdered($id): array
+    public function findAllUser($id): array
     {
-        $query = $this->createQueryBuilder('lnk')
-            ->select('lnk.id', 'lnk.id_resp','use.name','use.id')
+        /*$query = $this->createQueryBuilder('lnk')
+            ->select('lnk.id', 'lnk.id_entites', 'lnk.id_resp','use.name','use.id', 'use.email', 'use.username')
             ->innerJoin('App\Entity\User', 'use')
-            ->where('lnk.id_resp = use.id')
+            ->where('lnk.id_resp = use.id and lnk.id_entites = '.$id)
+            ->getQuery();
+*/
+        $query = $this->createQueryBuilder('lnk')
+            /*/->select('lnk.id', 'lnk.id_entites', 'lnk.id_resp', 'use.name', 'use.id', 'use.email', 'use.username')*/
+            /*->innerJoin('App\Entity\User', 'use')*/
+            ->where('lnk.id_entites = ' . $id)
             ->getQuery();
 
         return $query->getResult();
-/*
-        $dql = 'SELECT * FROM A.App\Entity\RespStock LEFT JOIN B.App\Entity\User ON A.id_resp = B.id WHERE A.id_entites = '. $id;
-        $query = $this->getEntityManager()->createQuery($dql);
-        return array();//$query->execute();*/
+    }
+
+    /**
+     * @return RespStock[]
+     */
+    public function findAllAccessUser($id): array
+    {
+        $query = $this->createQueryBuilder('lnk')
+        ->select('lnk.id', 'lnk.id_entites', 'lnk.id_resp', 'enti.name', 'enti.id', 'enti.ville', 'enti.codep')
+        ->innerJoin('App\Entity\Entites', 'enti')
+        ->where('lnk.id_resp = '. $id .' and lnk.id_entites = enti.id')
+        ->getQuery();
+
+        return $query->getResult();
     }
 
     // /**

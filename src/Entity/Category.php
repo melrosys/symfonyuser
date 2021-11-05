@@ -37,20 +37,20 @@ class Category
     private $parent;
 
     /**
-     * @ORM\Column(type="text")
-	 * @Groups({"category:read", "category:write"})
+     * @ORM\Column(type="text", nullable=true)
+     * @Groups({"category:read", "category:write"})
      */
     private $data;
 
     /**
-     * @ORM\Column(type="integer")
-	 * @Groups({"category:read", "category:write"})
+     * @ORM\Column(type="integer", nullable=true)
+     * @Groups({"category:read", "category:write"})
      */
     private $quantity;
 
     /**
-     * @ORM\Column(type="string", length=100)
-	 * @Groups({"category:read", "category:write"})
+     * @ORM\Column(type="string", length=100, nullable=true)
+     * @Groups({"category:read", "category:write"})
      */
     private $picture;
 

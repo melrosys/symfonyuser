@@ -1,0 +1,108 @@
+        <div class="modal modal-primary fade" id="myChangeprofile" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="card-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">X</button>
+                        Ajouter une entités
+                    </div>
+                    <br>
+                    {{ form_start(formobject, {'action': path('entites_entite_id', { 'id': entite.id })}) }}
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label>Nom</label>
+                            {{ form_widget(formobject.name, {'attr': {'class': 'form-control'}, 'required': true}) }}
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label>Adresse</label>
+                            {{ form_widget(formobject.adresse, {'attr': {'class': 'form-control'}}) }}
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label>Ville</label>
+                            {{ form_widget(formobject.ville, {'attr': {'class': 'form-control'}}) }}
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label>Code postal</label>
+                            {{ form_widget(formobject.codep, {'attr': {'class': 'form-control'}}) }}
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label>Telephone</label>
+                            {{ form_widget(formobject.tel_entite, {'attr': {'class': 'form-control'}}) }}
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <button class="btn btn-primary">Valider</button>
+                        </div>
+                    </div>
+                    {{ form_end(formobject) }}
+                </div>
+                <!---content -->
+            </div>
+            <!-- /.mlog -->
+        </div>
+        <div class="modal modal-primary fade" id="myAddsalle" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="card-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">X</button>
+                        Ajouter une salle de stockage
+                    </div>
+                    <br>
+                    {{ form_start(form_salle, {'action': path('salle_register', { 'id': entite.id })}) }}
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label>Nom</label>
+                            {{ form_widget(form_salle.name, {'attr': {'class': 'form-control'}, 'required': true}) }}
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label>Emplacement</label>
+                            {{ form_widget(form_salle.position, {'attr': {'class': 'form-control'}}) }}
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <button class="btn btn-primary">Valider</button>
+                        </div>
+                    </div>
+                    {{ form_end(form_salle) }}
+                </div>
+                <!-- /.modal-content -->
+            </div>
+            <!-- /.modal-dialog -->
+        </div>
+        <div class="modal modal-primary fade" id="myAddresponsable" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="card-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">X</button>
+                        Ajouter un utilisateur
+                    </div>
+                    <br>
+                    {{ form_start(form_resp, {'action': path('resp_register', { 'id': entite.id })}) }}
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label>Utilisateur</label>
+                            {{ form_widget(form_resp.id_resp, {'attr': {'class': 'form-control'}, 'required': true}) }}
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <button class="btn btn-primary">Valider</button>
+                        </div>
+                    </div>
+                    {{ form_end(form_resp) }}
+                </div>
+                <!-- /.modal-content -->
+            </div>
+            <!-- /.modal-dialog -->
+        </div>

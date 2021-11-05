@@ -27,7 +27,8 @@
                 </div>
                 <p class="description text-center">
                   <font style="font-size:10px">Date de création du compte</font><br>
-                  <b style="color:#000">{{ users.createAt|date('Y-m-d H:i:s') }}</b>
+                  <b style="color:#000">{{ users.createAt|date('Y-m-d H:i:s') }}</b><br>
+                  {{ users.nbconnect }}<br>Nombre connexion
                   <br><br>
                     {% if users.status != 1 %}
                     <b style="color:#acbc1e">
@@ -42,144 +43,76 @@
                     {% endif %}
                 </p>
               </div>
-              <div class="card-footer">
-                <hr>
-                <div class="button-container">
-                  <div class="row">
-                    <div class="col-lg-12 col-md-6 col-6 ml-auto mr-auto">
-                      <h5>{{ users.nbconnect }}<br><small>Nombre connexion</small></h5>
-                    </div>
-                  </div>
-                </div>
-              </div>
             </div>
           </div>
           <div class="col-md-9">
             <div class="card">
               <div class="card-header">
-                <h4 class="card-title">Paramètres utilisateur</h4>
-                <p><a href="/admin/users">Retour</a></p>
+                <p><a href="/admin/users">Retour</a> / Date de la dernière connexion : {{ users.LastConnect|date('Y-m-d H:i:s') }}</p>
+                <nav class="navbar navbar-expand-lg navbar-dark bg-dark" style="height:30px">
+                  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <i class="nc-icon nc-settings-gear-65" style="color:#fff"></i>
+                    <ul class="navbar-nav mr-auto">
+                      <li class="nav-item">
+                        <a class="nav-link"  href="#" data-toggle="modal" data-target="#myChangeprofile" data-cache="false">Modifier le profile</a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link" href="#" data-toggle="modal" data-target="#myChangemdp" data-cache="false">Changer le mot de passe</a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link" href="#" data-toggle="modal" data-target="#mySupp" data-cache="false">Effacer le compte</a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link" href="#" data-toggle="modal" data-target="#myChangeavatar" data-cache="false">Changer l'avatar</a>
+                      </li>
+                    </ul>
+                  </div>
+                </nav>
+              </div>
+            </div>
+            <div class="card">
+              <div class="card-header">
+                <h4 class="card-title">Accès aux salles de stockage</h4>
               </div>
               <div class="card-body">
                 <div  id="icons-wrapper">
                     <div class="row">
-                        <div class="col-md-4">
-                            {{ form_start(formobject, {'action': path('admin_user_update', { 'id': users.id })}) }}
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <label>Nom</label>
-                                    {{ form_widget(formobject.name, {'attr': {'class': 'form-control'}, 'required': true}) }}
-                                </div>
-                            </div>
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <label>Adresse mail</label>
-                                    {{ form_widget(formobject.email, {'attr': {'class': 'form-control'}, 'required': true}) }}
-                                </div>
-                            </div>
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <label>Nom d'utilisateur</label>
-                                    {{ form_widget(formobject.username, {'attr': {'class': 'form-control'}, 'required': true}) }}
-                                </div>
-                            </div>
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                <label>Roles</label>
-                                <select name="role_user" class="form-control">
-                                    {% if role == 'ROLE_ADMIN' %}
-                                    <option value="ROLE_ADMIN" selected>Administrateur</option>
-                                    <option value="ROLE_USER">Utilisateur</option>
-                                    {% else %}
-                                    <option value="ROLE_USER" selected>Utilisateur</option>
-                                    <option value="ROLE_ADMIN">Administrateur</option>
+                        <div class="col-md-12" align=center>
+                        {% if access is defined %}
+                            {% if access|length != 0 %}
+                                <table class="table"
+                                {% for entites in access %}
+                                <tr>
+                                    <td>
+                                    <i class="nc-icon nc-bank"></i> 
+                                    {% if entites.entites.name is defined %}
+                                    <a href="/admin/entites/entite/{{ entites.entites.id }}">{{ entites.entites.name }}</a>
                                     {% endif %}
-                                </select>
-                                </div>
-                            </div>
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                <label>Etat du compte</label>
-                                <select name="status" class="form-control">
-                                    {% if users.status != 1 %}
-                                    <option value="0" selected>Compte activé</option>
-                                    <option value="1">Compte désactivé</option>
-                                    {% else %}
-                                    <option value="1" selected>Compte désactivé</option>
-                                    <option value="0">Compte activé</option>
+                                    </td>
+                                    <td>
+                                    {% if entites.entites.ville is defined %}
+                                    {{ entites.entites.ville }}
                                     {% endif %}
-                                </select>
-                                </div>
-                            </div>
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <button class="btn btn-primary">Valider</button>
-                                </div>
-                            </div>
-                            {{ form_end(formobject) }}
-                        </div>
-                        <div class="col-md-4" align=center>
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <label>Date de création</label>
-                                    <input type="text" value="{{ users.createAt|date('Y-m-d H:i:s') }}" class="form-control" readonly>
-                                </div>
-                            </div>
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <label>Dernère connexion</label>
-                                    <input type="text" value="{{ users.LastConnect|date('Y-m-d H:i:s') }}" class="form-control" readonly>
-                                </div>
-                            </div>
-                            <hr>
-                            {{ form_start(form_img, {'action': path('upload_users_image', { 'id': users.id })}) }}
-                            <div class="col-md-12" align=center>
-                                <div class="form-group">
-                                    <h6>Avatar</h6>
-                                    {% if users.picture %}
-                                    <label style="padding:10px;font-size:60p"><img src="{{ asset('upload/avatar/') }}{{ users.picture }}" class="rounded-circle" style="height:100px"></label>
-                                    {% else %}
-                                    <label style="padding:10px;font-size:60px"><i class="nc-icon nc-image"></i></label>
+                                    </td>
+                                    <td>
+                                    {% if entites.entites.codep is defined %}
+                                    {{ entites.entites.codep }}
                                     {% endif %}
-                                    {{ form_widget(form_img.picture) }}
-                                </div>
-                            </div>
-                            <div class="col-md-12" align=center>
-                                <div class="form-group">
-                                    <button class="btn btn-primary">Uploader</button>
-                                </div>
-                            </div>
-                            {{ form_end(form_img) }}
-                        </div>
-                        <div class="col-md-4" align=center>
-                            <h6>Modifier le mot de passe</h6>
-                            {{ form_start(form_password, {'action': path('admin_user_update_password', { 'id': users.id })}) }}
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <label>Changer le mot de passe</label>
-                                    {{ form_widget(form_password.plainPassword, {'attr': {'class': 'form-control'}, 'required': true}) }}
-                                </div>
-                            </div>
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <button class="btn btn-primary">Changer</button>
-                                </div>
-                            </div>
-                            {{ form_end(form_password) }}
-                            <h6>Supprimer le compte</h6>
-                            {{ form_start(form_supp, {'action': path('admin_user_supp', { 'id': users.id })}) }}
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <label style="color:#ff0000">Tapez (<b>supp</b>) puis Entrer</label>
-                                    {{ form_widget(form_supp.confirme, {'attr': {'class': 'form-control'}, 'required': true}) }}
-                                </div>
-                            </div>
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <button class="btn btn-primary">Supprimer</button>
-                                </div>
-                            </div>
-                            {{ form_end(form_supp) }}
+                                    </td>
+                                    <td class="text-right">
+                                    <a href="/admin/entites/entite/{{ entites.entites.id }}"><i class="nc-icon nc-zoom-split"></i></a>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                                </table>
+                            {% else %}
+                                <i class="fa fa-plus" style="font-size:50px;color:#ddd"></i><br>
+                                <font style="font-size:20px">Ajoutez un utilisateur</font><br>
+                            {% endif %}
+                        {% else %}
+                            <i class="fa fa-plus" style="font-size:50px;color:#ddd"></i><br>
+                            <font style="font-size:20px">Ajoutez un utilisateur</font><br>
+                        {% endif %}
                         </div>
                     </div>
                 </div>
@@ -187,6 +120,7 @@
             </div>
           </div>
         </div>
+        {% include 'admin/domodal.user.change.html.twig' %}
 <script>
 var activepage = "#slidelink5";
 </script>

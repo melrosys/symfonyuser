@@ -64,6 +64,16 @@ class Entites
      */
     private $tel_entite;
 
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $nb_resp;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $nb_salle;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -173,6 +183,30 @@ class Entites
     public function setTelEntite(?string $tel_entite): self
     {
         $this->tel_entite = $tel_entite;
+
+        return $this;
+    }
+
+    public function getNbResp(): ?int
+    {
+        return $this->nb_resp;
+    }
+
+    public function setNbResp(?int $nb_resp): self
+    {
+        $this->nb_resp = $nb_resp;
+
+        return $this;
+    }
+
+    public function getNbSalle(): ?int
+    {
+        return $this->nb_salle;
+    }
+
+    public function setNbSalle(?int $nb_salle): self
+    {
+        $this->nb_salle = $nb_salle;
 
         return $this;
     }

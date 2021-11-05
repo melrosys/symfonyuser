@@ -15,12 +15,3 @@ admin_user_update:
     requirements: 
         id: '\d+'
     controller: App\Controller\AdminController::list_users_update
-admin_device_list:
-    path: /admin/device
-    controller: App\Controller\AdminController::list_device
-admin_tech_list:
-    path: /admin/tech
-    controller: App\Controller\AdminController::list_tech
-admin_storage_list:
-    path: /admin/storage
-    controller: App\Controller\AdminController::list_storage

@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Services\resizeImage;
 use App\Entity\User;
+use App\Entity\RespStock;
 use App\Form\ChangePasswordUserType;
 use App\Form\ChangeUserType;
 use App\Form\SuppUsertType;
@@ -67,13 +68,16 @@ class AdminController extends AbstractController
         $form_password = $this->createForm(ChangePasswordUserType::class, $users);
         $form_delete = $this->createForm(SuppUsertType::class);
         $role = $users->getRoles();
+        $access = $this->getDoctrine()->getRepository(RespStock::class)->findBy(array('id_resp'=> $id));
+        //dump($access);exit();
         return $this->render('admin/user.change.html.twig', [
             'formobject' => $form->createView(),
             'form_img' => $form_img->createView(),
             'form_password' => $form_password->createView(),
             'form_supp' => $form_delete->createView(),
             'users' => $users,
-            'role' => $role[0]
+            'role' => $role[0],
+            'access'=> $access
         ]);
     }
 
@@ -213,16 +217,6 @@ class AdminController extends AbstractController
     public function list_tech(): Response
     {
         return $this->render('admin/tech.html.twig', [
-            'controller_name' => 'AdminController',
-        ]);
-    }
-
-    /**
-     * @Route("/admin/device", name="admin_device_list")
-     */
-    public function list_device(): Response
-    {
-        return $this->render('admin/device.html.twig', [
             'controller_name' => 'AdminController',
         ]);
     }
