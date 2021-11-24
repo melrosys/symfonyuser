@@ -80,6 +80,7 @@ class DeviceController extends AbstractController
         $materiel = $this->getDoctrine()->getRepository(Materiel::class)->find($id);
         $listcatego = $this->getDoctrine()->getRepository(Category::class)->findBy(array('parent' => $id));
         $listproduit = $this->getDoctrine()->getRepository(Product::class)->findBy(array('id_materiel' => $id));
+        //dump($listproduit);exit();
         return $this->render('device/list.html.twig', [
             'controller_name' => 'Gestion du matériel',
             'materiel' => $materiel,
@@ -104,11 +105,12 @@ class DeviceController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
+            $materiel = $this->getDoctrine()->getRepository(Materiel::class)->find($id);
             $catego = $form->getData();
             $catego->setParent($id);
             $catego->setCreateAt(new \DateTime());
             $catego->setModifiedAt(new \DateTime());
+            $catego->setMateriel($materiel);
             //$materiel->setParent(-1);
 
             $entityManager = $this->getDoctrine()->getManager();
@@ -182,13 +184,13 @@ class DeviceController extends AbstractController
         $form = $this->createForm(AddProductType::class);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted()) {
+        if ($form->isSubmitted() && $form->isValid()) {
 
             $product->setIdCatego($request->request->get('id_catego'));
             $product->setTitle($form->get("title")->getData());
 
             $marque = $form->get("marque")->getData();
-            $product->setMarque($marque->getId());
+            $product->setIdMarque($marque->getId());
 
             $fourni = $form->get("id_fourni")->getData();
             $product->setIdFourni($fourni->getId());
@@ -196,6 +198,9 @@ class DeviceController extends AbstractController
             $product->setModel($form->get("model")->getData());
             $product->setWaranty($form->get("waranty")->getData());
             $product->setGestSn($form->get("gest_sn")->getData());
+            $product->setTags($form->get("tags")->getData());
+            $product->setMarque($marque);
+            $product->setFournisseur($fourni);
 
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($product);

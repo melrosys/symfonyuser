@@ -21,16 +21,16 @@
 <div class="wrapper ">
     <div class="sidebar" data-color="white" data-active-color="danger">
       <div class="logo">
-        {% if app.user.picture is defined %}
-          {% if app.user.picture %}
-          <img src="{{ asset('upload/avatar/') }}{{ app.user.picture }}" class="rounded-circle" style="height:30px">
-          {{ app.user.name }}
-          {% else %}
-          <i class="nc-icon nc-image" style="font-size:30px"></i> {{ app.user.name }}
-          {% endif %}
+        {% if app.user is defined %}
+          <a href="https://www.creative-tim.com" class="simple-text logo-mini">
+            <i class="nc-icon nc-bank" style="font-size:30px"></i>
+          </a>
+          <a href="https://www.creative-tim.com" class="simple-text logo-normal" style="font-size:12px !important">
+            {{ salle.entites.name }}<br>
+          </a>
         {% else %}
           <a href="https://www.creative-tim.com" class="simple-text logo-mini">
-            <i class="nc-icon nc-user-run" style="font-size:30px"></i>
+            <i class="nc-icon nc-bank" style="font-size:30px"></i>
           </a>
           <a href="https://www.creative-tim.com" class="simple-text logo-normal" style="font-size:12px !important">
             ANONYMOUS
@@ -41,33 +41,33 @@
         <ul class="nav">
         {% if app.user %}
           <li id="slidelink1">
-            <a href="/admin">
-              <i class="nc-icon nc-bank"></i>
-              <p>Accueil</p>
-            </a>
-          </li>
-          <li id="slidelink1">
             <a href="/admin/device">
               <i class="nc-icon nc-laptop"></i>
               <p>Centrale produit</p>
             </a>
           </li>
-          <li id="slidelink10">
-            <a href="/admin/entites/list">
-              <i class="nc-icon nc-bank"></i>
-              <p>Entités</p>
+          <li id="slidelink1">
+            <a href="/admin/device">
+              <i class="nc-icon nc-laptop"></i>
+              <p>Catégorie</p>
+            </a>
+          </li>
+          <li id="slidelink2">
+            <a href="/admin/tech">
+              <i class="nc-icon nc-badge"></i>
+              <p>Fournisseur</p>
+            </a>
+          </li>
+          <li id="slidelink3">
+            <a href="/admin/tech">
+              <i class="nc-icon nc-badge"></i>
+              <p>Marque</p>
             </a>
           </li>
           <li id="slidelink4">
             <a href="/admin/tech">
               <i class="nc-icon nc-badge"></i>
               <p>Installateur</p>
-            </a>
-          </li>
-          <li id="slidelink5">
-            <a href="/admin/users">
-              <i class="nc-icon nc-single-02"></i>
-              <p>Utilisateur</p>
             </a>
           </li>
           {% else %}
@@ -87,7 +87,7 @@
         </ul>
       </div>
     </div>
-    <div class="main-panel" tyle="height:100%">
+    <div class="main-panel">
     {% if app.user %}
     <!-- Navbar -->
       <nav class="navbar navbar-expand-lg navbar-dark" style="height:30px;background-color:#4e8db0">

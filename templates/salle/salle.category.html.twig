@@ -1,0 +1,85 @@
+{% extends 'base.salle.html.twig' %}
+
+{% block title %}Hello EntitesController!{% endblock %}
+
+{% block content %}
+        <div class="row">
+          <div class="col-md-3">
+            <div class="card">
+              <div class="card-header">
+                <h4 class="card-title">Catégorie</h4>
+                <p><a href="">Ajouter une catégorie</a></p>
+              </div>
+              <div class="card-body">
+                <div class="icons-wrapper">
+                    <div style="background-color:#4e8db0;padding:5px;color:#fff" align=center>
+                        {{ materiel.title }}
+                    </div>
+                    <div style="color:#4e8db0;" align=center>
+                        <i class="fa fa-sort"></i>
+                    </div>
+                    <div style="background-color:#79b6d8;padding:5px;color:#fff" align=center>
+                        <i class="fa fa-eye"></i> {{ categorie.name }}
+                    </div>
+                    <div style="color:#4e8db0;" align=center>
+                        <i class="fa fa-sort"></i>
+                    </div>
+                    <table class="table">
+                    <tbody>
+                    {% for categorie in categories %}
+                      <tr>
+                        <td>
+                          <i class="nc-icon nc-laptop"></i> 
+                          {{ categorie.name }}
+                        </td>
+                        <td class="text-right">
+                          <a href="/admin/entites/salle/category/{{ categorie.id }}"><i class="nc-icon nc-zoom-split"></i></a>
+                        </td>
+                      </tr>
+                      {% endfor %}
+                    </tbody>
+                    </table>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-9">
+            <div class="card">
+              <div class="card-header">
+                <div class="col-md-4" style="float:right">
+                  <form>
+                    <div class="input-group no-border">
+                      <input type="text" value="" class="form-control" placeholder="Search..." id="searchsug">
+                      <div class="input-group-append">
+                        <div class="input-group-text">
+                          <i class="nc-icon nc-zoom-split"></i>
+                        </div>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+                <h4 class="card-title">Produit(s) géré(s) : {{ salle.name }}</h4>
+                <p><a href="/admin/entites/salle/materiel/{{ identity }}">Retour</a> / Emplaçement de la salle : {{ salle.position }}</p>
+              </div>
+              <div class="card-body">
+                <div class="icons-wrapper">
+                    {% include 'entites/list.product.html.inc.twig' %}
+                </div>
+              </div>
+            </div>
+            <div class="card">
+              <div class="card-header">
+                <h4 class="card-title">Produit non géré</h4>
+              </div>
+              <div class="card-body">
+                <div class="icons-wrapper">
+                    {% include 'entites/list.productnongerer.html.inc.twig' %}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+<script>
+var activepage = "#slidelink10";
+</script>
+{% endblock %}

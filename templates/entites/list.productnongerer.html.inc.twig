@@ -1,0 +1,23 @@
+<table class="table">
+<tbody>
+{% for product in products %}
+  <tr>
+    {% if product.link_id is null %}
+    <td style="color:#bbb">
+      <i class="nc-icon nc-laptop"></i> 
+      {{ product.title }}
+    </td>
+    <td style="color:#bbb">
+      &nbsp;
+    </td>
+    <td>
+       <span class="badge badge-warning">non géré</span>
+    </td>
+    <td class="text-right">
+        <a href="javascript:change_even('/admin/entites/salle/addgerer/{{ product.prodid }}')"><span class="badge badge-primary">gérer ce produit</span></a>
+    </td>
+    {% endif %}
+  </tr>
+{% endfor %}
+</tbody>
+</table>

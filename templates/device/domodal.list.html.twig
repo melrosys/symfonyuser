@@ -123,7 +123,7 @@
                 <div class="modal-content">
                   <div class="card-header">
                       <button type="button" class="close" data-dismiss="modal" aria-label="Close">X</button>
-                      Nouveau fournisseur
+                      Ajouter un nouveau produit
                   </div>
                   <br>
                   {{ form_start(form_product, {'action': path('product_register', { 'id': materiel.id })}) }}
@@ -134,44 +134,56 @@
                       </div>
                   </div>
                   <div class="col-md-12">
-                      <div class="form-group">
-                      <label>Choisir une catégorie</label>
-                      <select name="id_catego" class="form-control">
-                        {% for listcatego in listcategos %}
-                        <option value="{{ listcatego.id }}">{{ listcatego.name }}</option>
-                        {% endfor %}
-                      </select>
-                      </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                            <label>Choisir une catégorie</label>
+                            <select name="id_catego" class="form-control">
+                                {% for listcatego in listcategos %}
+                                <option value="{{ listcatego.id }}">{{ listcatego.name }}</option>
+                                {% endfor %}
+                            </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                            <label>Modèle</label>
+                            {{ form_widget(form_product.model, {'attr': {'class': 'form-control'}}) }}
+                            </div>
+                        </div>
+                    </div>
                   </div>
                   <div class="col-md-12">
-                      <div class="form-group">
-                      <label>Modèle</label>
-                      {{ form_widget(form_product.model, {'attr': {'class': 'form-control'}}) }}
-                      </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                            <label>marque</label>
+                            {{ form_widget(form_product.marque, {'attr': {'class': 'form-control'}}) }}
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                            <label>Choisir un fournisseur</label>
+                            {{ form_widget(form_product.id_fourni, {'attr': {'class': 'form-control'}}) }}
+                            </div>
+                        </div>
+                    </div>
                   </div>
                   <div class="col-md-12">
-                      <div class="form-group">
-                      <label>marque</label>
-                      {{ form_widget(form_product.marque, {'attr': {'class': 'form-control'}}) }}
-                      </div>
-                  </div>
-                  <div class="col-md-12">
-                      <div class="form-group">
-                      <label>Choisir un fournisseur</label>
-                      {{ form_widget(form_product.id_fourni, {'attr': {'class': 'form-control'}}) }}
-                      </div>
-                  </div>
-                  <div class="col-md-12">
-                      <div class="form-group">
-                      <label>Durée garantie</label>
-                      {{ form_widget(form_product.waranty, {'attr': {'class': 'form-control'}}) }}
-                      </div>
-                  </div>
-                  <div class="col-md-12">
-                      <div class="form-group">
-                      <label>Gérer les numéro de série</label>
-                      {{ form_widget(form_product.gest_sn, {'attr': {'class': 'form-control'}}) }}
-                      </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                            <label>Durée garantie</label>
+                            {{ form_widget(form_product.waranty, {'attr': {'class': 'form-control'}}) }}
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                            <label>Gérer les numéro de série</label>
+                            {{ form_widget(form_product.gest_sn, {'attr': {'class': 'form-control'}}) }}
+                            </div>
+                        </div>
+                    </div>
                   </div>
                   <div class="col-md-12">
                       <div class="form-group">

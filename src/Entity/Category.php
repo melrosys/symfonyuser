@@ -2,10 +2,14 @@
 
 namespace App\Entity;
 
+use App\Entity\Materiel;
 use ApiPlatform\Core\Annotation\ApiResource;
 use App\Repository\CategoryRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Doctrine\ORM\Mapping\OneToOne;
+use Doctrine\ORM\Mapping\ManyToOne;
+use Doctrine\ORM\Mapping\JoinColumn;
 
 /**
  * @ApiResource(
@@ -16,6 +20,12 @@ use Symfony\Component\Serializer\Annotation\Groups;
  */
 class Category
 {
+    /**
+     * @ManyToOne(targetEntity="Materiel", fetch="EAGER")
+     * @JoinColumn(name="materiel_id", referencedColumnName="id")
+     */
+    private $materiel;
+
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
@@ -151,5 +161,21 @@ class Category
         $this->modifiedAt = $modifiedAt;
 
         return $this;
+    }
+
+    /**
+     * @param Materiel $materiel
+     */
+    public function setMateriel(Materiel $materiel = null)
+    {
+        $this->materiel = $materiel;
+    }
+
+    /**
+     * @return Materiel
+     */
+    public function getMateriel()
+    {
+        return $this->materiel;
     }
 }

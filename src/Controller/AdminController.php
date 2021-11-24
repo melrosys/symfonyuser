@@ -77,7 +77,8 @@ class AdminController extends AbstractController
             'form_supp' => $form_delete->createView(),
             'users' => $users,
             'role' => $role[0],
-            'access'=> $access
+            'access'=> $access,
+            "submenu"=> "admin/sub.menu.user.html.twig"
         ]);
     }
 

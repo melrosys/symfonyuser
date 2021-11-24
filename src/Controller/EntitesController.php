@@ -3,22 +3,28 @@
 namespace App\Controller;
 
 use App\Services\resizeImage;
+use App\Services\resolveSession;
 use App\Form\UploadImageUserType;
 use App\Form\CreateEntitesType;
 use App\Form\SuppUsertType;
 use App\Form\EntiteChangeType;
 use App\Form\SalleStorageType;
 use App\Form\AddRespType;
+use App\Form\AddNonGereType;
 use App\Entity\Entites;
 use App\Entity\RespStock;
 use App\Entity\SalleStorage;
+use App\Entity\Materiel;
+use App\Entity\Category;
+use App\Entity\Product;
+use App\Entity\SalleProd;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
+use Symfony\Component\Routing\Annotation\Route;
 
 class EntitesController extends AbstractController
 {
@@ -107,9 +113,11 @@ class EntitesController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $entite = $this->getDoctrine()->getRepository(Entites::class)->find($id);
             $salles->setSiteId($id);
             $salles->setName($form->get('name')->getData());
             $salles->setPosition($form->get('position')->getData());
+            $salles->setEntites($entite);
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($salles);
             $entityManager->flush();
@@ -128,7 +136,10 @@ class EntitesController extends AbstractController
      */
     public function list_entite_id(Request $request, int $id): Response
     {
+        $session = new resolveSession();
+        $session->set('entity_id', $id);
         $entite = $this->getDoctrine()->getRepository(Entites::class)->find($id);
+
         $form = $this->createForm(EntiteChangeType::class, $entite);
         $form_img = $this->createForm(UploadImageUserType::class, $entite);
         $form_delete = $this->createForm(SuppUsertType::class);
@@ -152,12 +163,11 @@ class EntitesController extends AbstractController
         }
 
         $respstock = $this->getDoctrine()->getRepository(RespStock::class)->findBy(array('id_entites' => $id));
-        
         $listsalle = $this->getDoctrine()->getRepository(SalleStorage::class)->findBy(array('site_id' => $id));
         //dump($respstock);
         //exit();
 
-        return $this->render('entites/entite.change.html.twig', [
+        return $this->render('entites/entite.edit.html.twig', [
             'formobject' => $form->createView(),
             'form_img' => $form_img->createView(),
             'form_supp' => $form_delete->createView(),
@@ -168,7 +178,7 @@ class EntitesController extends AbstractController
             'listsalle'=> $listsalle
         ]);
     }
-
+    
     /**
      * @Route("/admin/entite/uploadimg/{id}", name="upload_entite_image")
      * @IsGranted("ROLE_ADMIN")

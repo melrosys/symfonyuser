@@ -1,0 +1,18 @@
+                  <div class="col-md-12">
+                    <font style="font-size:30px">Gérer ce produit</font>
+                    {{ form_start(formobject, {'action': path('entites_salle_addgerer', { 'id': product.id })}) }}
+                        <div class="form-group">
+                            <label>Titre du produit</label>
+                            <input type="text" class="form-control" value="{{ product.title }}" readonly>
+                            {{ form_widget(formobject.product_id, {'attr': {'class': 'form-control'}, 'value': product.id }) }}
+                        </div>
+                        <div class="form-group">
+                            <label>Salle de stockage</label>
+                            <input type="text" class="form-control" value="{{ salle.name }}" readonly>
+                            {{ form_widget(formobject.sallestorage_id, {'attr': {'class': 'form-control'}, 'value': salle.id }) }}
+                        </div>
+                        <div class="form-group">
+                            <button class="btn btn-primary">Valider</button>
+                        </div>
+                    {{ form_end(formobject) }}
+                  </div>

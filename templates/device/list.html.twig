@@ -68,10 +68,13 @@
                         Titre
                       </th>
                       <th>
-                        Description
+                        Modèle
                       </th>
                       <th>
-                        Tags
+                        Marque
+                      </th>
+                      <th clas="text-right">
+                        Options
                       </th>
                     </thead>
                     <tbody>
@@ -85,9 +88,10 @@
                           {{ produit.model }}
                         </td>
                         <td>
-                          {{ produit.waranty }}
+                          {{ produit.marque.name }}
                         </td>
                         <td class="text-right">
+                          <a href="/admin/device/edit/{{ produit.id }}"><i class="nc-icon nc-settings-gear-65"></i></a>
                           <a href="/admin/device/list/{{ produit.id }}"><i class="nc-icon nc-zoom-split"></i></a>
                         </td>
                       </tr>

@@ -1,0 +1,23 @@
+<table class="table">
+<tbody>
+{% for product in products %}
+  <tr>
+    {% if product.link_id is not null %}
+    <td>
+      <i class="nc-icon nc-laptop"></i> 
+      {{ product.title }}
+    </td>
+    <td>
+      {{ product.quantity }} En stock
+    </td>
+    <td>
+        <span class="badge badge-success">en gestion</span>
+    </td>
+    <td class="text-right">
+    <a href="/admin/entites/salle/materiel/{{ product.product_id }}"><i class="nc-icon nc-zoom-split"></i></a>
+    </td>
+    {% endif %}
+  </tr>
+{% endfor %}
+</tbody>
+</table>

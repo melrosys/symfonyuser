@@ -72,22 +72,21 @@
                                     </td>
                                     <td class="text-right">
                                     <a href="/admin/entites/entite/{{ resp.user.id }}"><i class="nc-icon nc-zoom-split"></i></a>
-                                    <a href="/admin/entites/entite/{{ resp.user.id }}"><i class="nc-icon nc-settings-gear-65"></i></a>
                                     </td>
                                 </tr>
                                 {% endfor %}
                                 </table>
                                 <hr>
-                                <a href="#" data-toggle="modal" data-target="#myAddresponsable" data-cache="false">Nouvel utilisateur</a>
+                                <a href="#" data-toggle="modal" data-target="#myAddresponsable" data-cache="false" class="btn btn-primary">Nouvel utilisateur</a>
                             {% else %}
                                 <i class="fa fa-plus" style="font-size:50px;color:#ddd"></i><br>
                                 <font style="font-size:20px">Ajoutez un utilisateur</font><br>
-                                <a href="#" data-toggle="modal" data-target="#myAddresponsable" data-cache="false">Nouvel utilisateur</a>
+                                <a href="#" data-toggle="modal" data-target="#myAddresponsable" data-cache="false" class="btn btn-primary">Nouvel utilisateur</a>
                             {% endif %}
                         {% else %}
                             <i class="fa fa-plus" style="font-size:50px;color:#ddd"></i><br>
                             <font style="font-size:20px">Ajoutez un utilisateur</font><br>
-                            <a href="#" data-toggle="modal" data-target="#myAddresponsable" data-cache="false">Nouvel utilisateur</a>
+                            <a href="#" data-toggle="modal" data-target="#myAddresponsable" data-cache="false" class="btn btn-primary">Nouvel utilisateur</a>
                         {% endif %}
                         </div>
                     </div>
@@ -97,6 +96,7 @@
             <div class="card">
               <div class="card-header">
                 <h4 class="card-title">Salle de stockage</h4>
+                <p><a href="/admin/entites/list">Visualiser toutes les salles</a></p>
               </div>
               <div class="card-body">
                 <div  id="icons-wrapper">
@@ -119,22 +119,22 @@
                                     {% endif %}
                                     </td>
                                     <td class="text-right">
-                                    <a href="/admin/entites/entite/{{ salle.id }}"><i class="nc-icon nc-settings-gear-65"></i></a>
+                                    <a href="/admin/entites/salle/{{ salle.id }}"><i class="nc-icon nc-zoom-split"></i></a>
                                     </td>
                                 </tr>
                                 {% endfor %}
                                 </table>
                                 <hr>
-                                <a href="#" data-toggle="modal" data-target="#myAddsalle" data-cache="false">Nouvelle salle</a>
+                                <a href="#" data-toggle="modal" data-target="#myAddsalle" data-cache="false" class="btn btn-primary">Nouvelle salle</a>
                             {% else %}
                                 <i class="fa fa-plus" style="font-size:50px;color:#ddd"></i><br>
                                 <font style="font-size:20px">Créer une salle de stockage</font><br>
-                                <a href="#" data-toggle="modal" data-target="#myAddsalle" data-cache="false">Nouvelle salle</a>
+                                <a href="#" data-toggle="modal" data-target="#myAddsalle" data-cache="false" class="btn btn-primary">Nouvelle salle</a>
                             {% endif %}
                         {% else %}
                             <i class="fa fa-plus" style="font-size:50px;color:#ddd"></i><br>
                             <font style="font-size:20px">Créer une salle de stockage</font><br>
-                            <a href="#" data-toggle="modal" data-target="#myAddsalle" data-cache="false">Nouvelle salle</a>
+                            <a href="#" data-toggle="modal" data-target="#myAddsalle" data-cache="false" class="btn btn-primary">Nouvelle salle</a>
                         {% endif %}
                         </div>
                     </div>
@@ -217,14 +217,13 @@
 var activepage = "#slidelink10";
 function change_even(url)
 {
-    $('#myModalchangesn').modal('show');
+  $('#myModalchangesn').modal('show');
 	$.ajax({
 	   url : url,
 	   method: 'GET',
 	   dataType: 'html',
 	   success: function(code_html, statut){
 			$("#view_change_sn").html(code_html);
-			$('#myModalchangesn').modal('show');
 	   },
 
 	   error: function(resultat, statut, erreur){

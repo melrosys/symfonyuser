@@ -1,0 +1,113 @@
+{% extends 'base.salle.html.twig' %}
+
+{% block title %}Hello EntitesController!{% endblock %}
+
+{% block content %}
+        <div class="row">
+          <div class="col-md-3">
+            <div class="card">
+              <div class="card-header">
+                <h4 class="card-title">Matériel</h4>
+                <p><a href="">Ajouter un matériel</a></p>
+              </div>
+              <div class="card-body">
+                <div class="icons-wrapper">
+                    <table class="table">
+                    <tbody>
+                    {% for materiel in materiels %}
+                      <tr>
+                        <td>
+                          <i class="nc-icon nc-laptop"></i> 
+                          {{ materiel.title }}
+                        </td>
+                        <td class="text-right">
+                          <a href="/admin/entites/salle/materiel/{{ materiel.id }}"><i class="nc-icon nc-zoom-split"></i></a>
+                        </td>
+                      </tr>
+                      {% endfor %}
+                    </tbody>
+                    </table>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-9">
+            <div class="card">
+              <div class="card-header">
+                <div class="col-md-4" style="float:right">
+                  <form>
+                    <div class="input-group no-border">
+                      <input type="text" value="" class="form-control" placeholder="Search..." id="searchsug">
+                      <div class="input-group-append">
+                        <div class="input-group-text">
+                          <i class="nc-icon nc-zoom-split"></i>
+                        </div>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+                <h4 class="card-title">Produit(s) géré(s) : {{ salle.name }}</h4>
+                <p><a href="/admin/entites/entite/{{ identity }}">Retour</a> / Emplaçement de la salle : {{ salle.position }}</p>
+              </div>
+              <div class="card-body">
+                <div class="icons-wrapper">
+                    {% include 'entites/list.product.html.inc.twig' %}
+                </div>
+              </div>
+            </div>
+            <div class="card">
+              <div class="card-header">
+                <h4 class="card-title">Produit(s) non géré(s)</h4>
+              </div>
+              <div class="card-body">
+                <div class="icons-wrapper">
+                    {% include 'entites/list.productnongerer.html.inc.twig' %}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal modal-primary fade" id="myModalchangesn" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="card-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">X</button>
+                        Ajouter
+                    </div>
+                    <p>
+                      <div class="row">
+                        <div class="col-md-12" id="view_change_sn">
+                        </div>
+                      </div>
+                    </p>
+                </div>
+                <!-- /.modal-content -->
+            </div>
+            <!-- /.modal-dialog -->
+        </div>   
+<script>
+var activepage = "#slidelink10";
+function change_even(url)
+{
+  $("#view_change_sn").html('<img src="{{ asset('assets/img/loading.gif') }}">');
+  $('#myModalchangesn').modal('show');
+	$.ajax({
+	   url : url,
+	   method: 'GET',
+	   dataType: 'html',
+	   success: function(code_html, statut){
+			$("#view_change_sn").html(code_html);
+	   },
+
+	   error: function(resultat, statut, erreur){
+			
+	   },
+	   
+	   complete: function(resultat, statut){
+		  
+	   }
+
+	});
+}
+</script>
+{% endblock %}

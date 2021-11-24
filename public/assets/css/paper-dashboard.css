@@ -1749,7 +1749,8 @@ a[data-toggle="collapse"][aria-expanded="true"] .caret,
   padding-top: 0.625rem;
   padding-bottom: 0.625rem;
   min-height: 43px;
-  margin-bottom: 20px; }
+  margin-bottom: 20px;
+}
   .navbar a {
     vertical-align: middle; }
     .navbar a:not(.btn):not(.dropdown-item) {
@@ -3345,7 +3346,7 @@ License - nucleoapp.com/license/
   .main-panel > .content {
     padding: 0 30px 30px;
     min-height: calc(100vh - px);
-    margin-top: 93px; }
+    margin-top: 30px; }
   .main-panel > .navbar {
     margin-bottom: 0; }
   .main-panel .header {

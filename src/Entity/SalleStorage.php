@@ -2,15 +2,25 @@
 
 namespace App\Entity;
 
+use App\Entity\Entites;
 use ApiPlatform\Core\Annotation\ApiResource;
 use App\Repository\SalleStorageRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\OneToOne;
+use Doctrine\ORM\Mapping\ManyToOne;
+use Doctrine\ORM\Mapping\JoinColumn;
 
 /**
  * @ORM\Entity(repositoryClass=SalleStorageRepository::class)
  */
 class SalleStorage
 {
+    /**
+     * @ManyToOne(targetEntity="Entites", fetch="EAGER")
+     * @JoinColumn(name="entites_id", referencedColumnName="id")
+     */
+    private $entites;
+
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
@@ -89,5 +99,21 @@ class SalleStorage
         $this->data = $data;
 
         return $this;
+    }
+
+    /**
+     * @param Entites $entites
+     */
+    public function setEntites(Entites $entites = null)
+    {
+        $this->entites = $entites;
+    }
+
+    /**
+     * @return Entites
+     */
+    public function getEntites()
+    {
+        return $this->entites;
     }
 }

@@ -2,8 +2,13 @@
 
 namespace App\Entity;
 
+use App\Entity\Marque;
+use App\Entity\SalleStorage;
 use App\Repository\ProductRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\OneToOne;
+use Doctrine\ORM\Mapping\ManyToOne;
+use Doctrine\ORM\Mapping\JoinColumn;
 
 /**
  * @ORM\Entity(repositoryClass=ProductRepository::class)
@@ -11,11 +16,29 @@ use Doctrine\ORM\Mapping as ORM;
 class Product
 {
     /**
+     * @ManyToOne(targetEntity="Marque", fetch="EAGER")
+     * @JoinColumn(name="marque_id", referencedColumnName="id")
+     */
+    private $marque;
+
+    /**
+     * @ManyToOne(targetEntity="Fournisseur", fetch="EAGER")
+     * @JoinColumn(name="fournisseur_id", referencedColumnName="id")
+     */
+    private $fournisseur;
+
+    /**
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      */
     private $id;
+
+    /**
+     * @ManyToOne(targetEntity="SalleStorage", fetch="EAGER")
+     * @JoinColumn(name="sallestorage_id", referencedColumnName="id")
+     */
+    private $sallestorage;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -40,7 +63,7 @@ class Product
     /**
      * @ORM\Column(type="integer")
      */
-    private $marque;
+    private $id_marque;
 
     /**
      * @ORM\Column(type="integer")
@@ -120,14 +143,14 @@ class Product
         return $this;
     }
 
-    public function getMarque(): ?int
+    public function getIdMarque(): ?int
     {
-        return $this->marque;
+        return $this->id_marque;
     }
 
-    public function setMarque(int $marque): self
+    public function setIdMarque(int $id_marque): self
     {
-        $this->marque = $marque;
+        $this->id_marque= $id_marque;
 
         return $this;
     }
@@ -190,5 +213,53 @@ class Product
         $this->tags = $tags;
 
         return $this;
+    }
+
+    /**
+     * @param Fournisseur $fournisseur
+     */
+    public function setFournisseur(Fournisseur $fournisseur = null)
+    {
+        $this->fournisseur = $fournisseur;
+    }
+
+    /**
+     * @return Fournisseur
+     */
+    public function getFournisseur()
+    {
+        return $this->fournisseur;
+    }
+
+    /**
+     * @param Marque $marque
+     */
+    public function setMarque(Marque $marque = null)
+    {
+        $this->marque = $marque;
+    }
+
+    /**
+     * @return Marque
+     */
+    public function getMarque()
+    {
+        return $this->marque;
+    }
+
+    /**
+     * @param SalleStorage $salllestorage
+     */
+    public function setSalleStorage(SalleStorage $sallestorage = null)
+    {
+        $this->sallestorage = $sallestorage;
+    }
+
+    /**
+     * @return SalleStorage
+     */
+    public function getSalleStorage()
+    {
+        return $this->sallestorage;
     }
 }
